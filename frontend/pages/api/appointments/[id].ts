@@ -121,7 +121,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               lt: new Date(new Date(date).getTime() + duration * 60 * 1000)
             },
             status: {
-              in: ['PENDING', 'CONFIRMED']
+              in: ['PENDING' as any, 'CONFIRMED' as any]
             },
             id: { not: appointmentId }
           }
@@ -184,7 +184,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 location: (updatedAppointment.master.masterProfile?.location as string) || 'Da definire',
                 price: updatedAppointment.price || 0
               }
-            });
+            } as any);
           } else if (status === 'CANCELLED') {
             // Notify both parties about cancellation
             await notificationService.sendAppointmentCancelled({
@@ -201,7 +201,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 location: (updatedAppointment.master.masterProfile?.location as string) || 'Da definire',
                 price: updatedAppointment.price || 0
               }
-            });
+            } as any);
           }
         } catch (error) {
           console.error('Error sending notification:', error);
