@@ -9,11 +9,11 @@ COPY package*.json ./
 # Install dependencies
 RUN npm ci
 
-# Generate Prisma client
-RUN npx prisma generate
-
 # Copy source code
 COPY . .
+
+# Generate Prisma client
+RUN npx prisma generate
 
 # Expose port
 EXPOSE 3000
