@@ -181,7 +181,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 duration: updatedAppointment.duration,
                 masterName: updatedAppointment.master.name,
                 studentName: updatedAppointment.student.name,
-                location: updatedAppointment.master.masterProfile?.location || 'Da definire',
+                location: (updatedAppointment.master.masterProfile?.location as string) || 'Da definire',
                 price: updatedAppointment.price || 0
               }
             });
@@ -198,7 +198,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 duration: updatedAppointment.duration,
                 masterName: updatedAppointment.master.name,
                 studentName: updatedAppointment.student.name,
-                location: updatedAppointment.master.masterProfile?.location || 'Da definire',
+                location: (updatedAppointment.master.masterProfile?.location as string) || 'Da definire',
                 price: updatedAppointment.price || 0
               }
             });
