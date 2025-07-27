@@ -1,0 +1,65 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: lesson-app-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lesson_app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - lesson-app-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: lesson-app-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - TZ=Europe/Rome
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    networks:
+      - lesson-app-network
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  # Frontend Next.js App
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: lesson-app-frontend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - TZ=Europe/Rome
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - lesson-app-network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
+
+networks:
+  lesson-app-network:
+    driver: bridge 
