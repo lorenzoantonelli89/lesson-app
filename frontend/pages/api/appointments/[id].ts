@@ -173,14 +173,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await notificationService.sendAppointmentConfirmed({
               recipient: {
                 email: updatedAppointment.student.email,
-                name: updatedAppointment.student.name
+                name: updatedAppointment.student.name as string
               },
               appointment: {
                 id: updatedAppointment.id,
                 date: updatedAppointment.startTime.toISOString(),
                 duration: updatedAppointment.duration,
-                masterName: updatedAppointment.master.name,
-                studentName: updatedAppointment.student.name,
+                masterName: updatedAppointment.master.name as string,
+                studentName: updatedAppointment.student.name as string,
                 location: (updatedAppointment.master.masterProfile?.location as string) || 'Da definire',
                 price: updatedAppointment.price || 0
               }
@@ -190,14 +190,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await notificationService.sendAppointmentCancelled({
               recipient: {
                 email: updatedAppointment.student.email,
-                name: updatedAppointment.student.name
+                name: updatedAppointment.student.name as string
               },
               appointment: {
                 id: updatedAppointment.id,
                 date: updatedAppointment.startTime.toISOString(),
                 duration: updatedAppointment.duration,
-                masterName: updatedAppointment.master.name,
-                studentName: updatedAppointment.student.name,
+                masterName: updatedAppointment.master.name as string,
+                studentName: updatedAppointment.student.name as string,
                 location: (updatedAppointment.master.masterProfile?.location as string) || 'Da definire',
                 price: updatedAppointment.price || 0
               }
